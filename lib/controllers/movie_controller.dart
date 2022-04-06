@@ -8,9 +8,10 @@ class MovieController {
     fetch();
   }
 
-  late ValueNotifier<Movies?> movies = ValueNotifier(null);
+  ValueNotifier<Movies?> movies = ValueNotifier<Movies?>(null);
 
   fetch() async {
+    await Future.delayed(const Duration(seconds: 2));
     final data = await _moviesRepository.getMovies();
     movies.value = data;
   }
