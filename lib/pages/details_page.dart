@@ -3,7 +3,7 @@ import 'package:movie_app/models/movies_model.dart';
 import 'package:movie_app/utils/api_utils.dart';
 
 class DetailsPage extends StatelessWidget {
-  final Results movie;
+  final Movie movie;
   const DetailsPage({
     Key? key,
     required this.movie,

@@ -4,7 +4,7 @@ import 'package:movie_app/pages/details_page.dart';
 import 'package:movie_app/utils/api_utils.dart';
 
 class CustomListCardWidget extends StatelessWidget {
-  final Results movie;
+  final Movie movie;
   const CustomListCardWidget({Key? key, required this.movie}) : super(key: key);
 
   @override
