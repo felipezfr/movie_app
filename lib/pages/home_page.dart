@@ -36,77 +36,81 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ValueListenableBuilder<Movies?>(
-                    valueListenable: _controller.movies,
-                    builder: (_, movies, __) {
-                      return Visibility(
-                        visible: movies != null,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16),
-                                child: Text(
-                                  'Movies',
-                                  style: GoogleFonts.lato(
-                                      textStyle:
-                                          Theme.of(context).textTheme.headline4,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              GlassmorphismCardWidget(
-                                blur: GLASSMORPHISM.blur,
-                                opacity: GLASSMORPHISM.opacity,
-                                radius: GLASSMORPHISM.radius,
-                                child: TextField(
-                                  autocorrect: true,
-                                  onChanged: _controller.onChanged,
-                                  decoration: InputDecoration(
-                                    prefixIcon: const Icon(Icons.search),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    filled: true,
-                                    // fillColor: Colors.grey.shade500,
+          child: RefreshIndicator(
+            onRefresh: () async => await _controller.fetch(),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ValueListenableBuilder<Movies?>(
+                      valueListenable: _controller.movies,
+                      builder: (_, movies, __) {
+                        return Visibility(
+                          visible: movies != null,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                  child: Text(
+                                    'Movies',
+                                    style: GoogleFonts.lato(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
+                                        color: Colors.white),
                                   ),
                                 ),
-                              ),
-                            ],
+                                GlassmorphismCardWidget(
+                                  blur: GLASSMORPHISM.blur,
+                                  opacity: GLASSMORPHISM.opacity,
+                                  radius: GLASSMORPHISM.radius,
+                                  child: TextField(
+                                    autocorrect: true,
+                                    onChanged: _controller.onChanged,
+                                    decoration: InputDecoration(
+                                      prefixIcon: const Icon(Icons.search),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      filled: true,
+                                      // fillColor: Colors.grey.shade500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    }),
-                Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: ValueListenableBuilder<Movies?>(
-                    valueListenable: _controller.movies,
-                    builder: (_, movies, __) {
-                      return movies != null
-                          ? ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: movies.listMovie?.length ?? 0,
-                              shrinkWrap: true,
-                              itemBuilder: (_, idx) => CustomListCardWidget(
-                                movie: movies.listMovie![idx],
-                              ),
-                              // Text(movies.results![idx].title!),
-                              separatorBuilder: (_, __) => const Divider(),
-                            )
-                          : Center(
-                              child: Lottie.asset('assets/lottie_movie.json'),
-                            );
-                    },
+                        );
+                      }),
+                  Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: ValueListenableBuilder<Movies?>(
+                      valueListenable: _controller.movies,
+                      builder: (_, movies, __) {
+                        return movies != null
+                            ? ListView.separated(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: movies.listMovie?.length ?? 0,
+                                shrinkWrap: true,
+                                itemBuilder: (_, idx) => CustomListCardWidget(
+                                  movie: movies.listMovie![idx],
+                                ),
+                                // Text(movies.results![idx].title!),
+                                separatorBuilder: (_, __) => const Divider(),
+                              )
+                            : Center(
+                                child: Lottie.asset('assets/lottie_movie.json'),
+                              );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
