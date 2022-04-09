@@ -15,7 +15,7 @@ class MovieController {
   late final ScrollController scrollController;
 
   infiniteScrolling() {
-    if (scrollController.position.pixels + 20 >=
+    if (scrollController.position.pixels + 350 >=
             scrollController.position.maxScrollExtent &&
         loading.value == false) {
       _page++;

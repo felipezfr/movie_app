@@ -37,12 +37,12 @@ class CustomListCardWidget extends StatelessWidget {
                   width: 134,
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
-                      child: Hero(
-                        tag: movie.id!,
+                    child: Hero(
+                      tag: movie.id!,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10.0),
+                        ),
                         child: Image.network(
                           API.REQUEST_IMG(movie.posterPath!),
                           loadingBuilder: (BuildContext context, Widget child,

@@ -35,10 +35,10 @@ class DetailsPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Hero(
-                    tag: movie.id!,
+                Hero(
+                  tag: movie.id!,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
                     child: Image.network(
                       API.REQUEST_IMG(movie.posterPath!),
                       height: 400,
@@ -66,9 +66,9 @@ class DetailsPage extends StatelessWidget {
                     opacity: GLASSMORPHISM.opacity,
                     radius: GLASSMORPHISM.radius,
                     child: Padding(
-                      padding: const EdgeInsets.all(18),
+                      padding: const EdgeInsets.all(16),
                       child: Text("    " + movie.overview!,
-                          style: Theme.of(context).textTheme.bodyText2),
+                          style: const TextStyle(fontSize: 18)),
                     ),
                   ),
                 ),
