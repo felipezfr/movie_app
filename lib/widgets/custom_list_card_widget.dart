@@ -78,12 +78,12 @@ class CustomListCardWidget extends StatelessWidget {
                           overflow: TextOverflow.visible,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 24.0,
+                            fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 6,
                         ),
                         Text(
                           'Votos: ' + movie.voteCount.toString(),

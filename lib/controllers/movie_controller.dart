@@ -8,9 +8,25 @@ class MovieController {
     fetch();
   }
 
-  ValueNotifier<Movies?> movies = ValueNotifier<Movies?>(null);
-
+  static int _page = 1;
   Movies? _cachedMovies;
+  ValueNotifier<bool> loading = ValueNotifier<bool>(false);
+  ValueNotifier<Movies?> movies = ValueNotifier<Movies?>(null);
+  late final ScrollController scrollController;
+
+  infiniteScrolling() {
+    if (scrollController.position.pixels + 20 >=
+            scrollController.position.maxScrollExtent &&
+        loading.value == false) {
+      _page++;
+      fetch();
+    }
+  }
+
+  onRefresh() async {
+    _page = 1;
+    fetch();
+  }
 
   onChanged(String value) {
     List<Movie> list = _cachedMovies!.listMovie!
@@ -20,13 +36,22 @@ class MovieController {
               ),
         )
         .toList();
-    // movies.value = movies.value!.copyWith(listMovie: list);
+    movies.value = movies.value!.copyWith(listMovie: list);
   }
 
   fetch() async {
-    await Future.delayed(const Duration(seconds: 2));
-    final data = await _moviesRepository.getMovies();
-    movies.value = data;
+    loading.value = true;
+
+    // await Future.delayed(const Duration(seconds: 2));
+    final data = await _moviesRepository.getMovies(page: _page);
+
+    _cachedMovies?.listMovie!.addAll(data.listMovie!);
+
+    movies.value != null && _page != 1
+        ? movies.value = data.copyWith(listMovie: _cachedMovies!.listMovie)
+        : movies.value = data;
+
+    loading.value = false;
     _cachedMovies = movies.value;
   }
 }

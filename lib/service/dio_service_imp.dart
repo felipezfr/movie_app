@@ -6,7 +6,7 @@ class DioServiceImp implements DioService {
   Dio getDio() {
     return Dio(
       BaseOptions(
-        baseUrl: 'https://api.themoviedb.org/3/',
+        baseUrl: 'https://api.themoviedb.org/4/',
         headers: {
           'content-type': 'application/json;charset=utf-8',
           'authorization':

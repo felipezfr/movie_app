@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:movie_app/controllers/movie_controller.dart';
 import 'package:movie_app/models/movies_model.dart';
@@ -24,6 +26,21 @@ class _HomePageState extends State<HomePage> {
   );
 
   @override
+  void initState() {
+    super.initState();
+    _controller.scrollController = ScrollController();
+    _controller.scrollController.addListener(
+      _controller.infiniteScrolling,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.scrollController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
@@ -37,8 +54,9 @@ class _HomePageState extends State<HomePage> {
         ),
         SafeArea(
           child: RefreshIndicator(
-            onRefresh: () async => await _controller.fetch(),
+            onRefresh: () async => await _controller.onRefresh(),
             child: SingleChildScrollView(
+              controller: _controller.scrollController,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -88,27 +106,50 @@ class _HomePageState extends State<HomePage> {
                         );
                       }),
                   Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: ValueListenableBuilder<Movies?>(
-                      valueListenable: _controller.movies,
-                      builder: (_, movies, __) {
-                        return movies != null
-                            ? ListView.separated(
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: movies.listMovie?.length ?? 0,
-                                shrinkWrap: true,
-                                itemBuilder: (_, idx) => CustomListCardWidget(
-                                  movie: movies.listMovie![idx],
-                                ),
-                                // Text(movies.results![idx].title!),
-                                separatorBuilder: (_, __) => const Divider(),
-                              )
-                            : Center(
-                                child: Lottie.asset('assets/lottie_movie.json'),
-                              );
-                      },
-                    ),
-                  ),
+                      padding: const EdgeInsets.all(24.0),
+                      child: Stack(
+                        children: [
+                          ValueListenableBuilder<Movies?>(
+                            valueListenable: _controller.movies,
+                            builder: (_, movies, __) {
+                              return movies != null
+                                  ? ListView.separated(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: movies.listMovie?.length ?? 0,
+                                      shrinkWrap: true,
+                                      itemBuilder: (_, idx) =>
+                                          CustomListCardWidget(
+                                        movie: movies.listMovie![idx],
+                                      ),
+                                      // Text(movies.results![idx].title!),
+                                      separatorBuilder: (_, __) =>
+                                          const Divider(),
+                                    )
+                                  : Center(
+                                      child: Lottie.asset(
+                                          'assets/lottie_movie.json'),
+                                    );
+                            },
+                          ),
+                          ValueListenableBuilder<bool>(
+                              valueListenable: _controller.loading,
+                              builder: (_, isLoading, __) {
+                                return isLoading &&
+                                        _controller.movies.value != null
+                                    ? Positioned(
+                                        bottom: 0,
+                                        left:
+                                            (MediaQuery.of(context).size.width /
+                                                    2) -
+                                                20,
+                                        child:
+                                            const CircularProgressIndicator(),
+                                      )
+                                    : Container();
+                              }),
+                        ],
+                      )),
                 ],
               ),
             ),
