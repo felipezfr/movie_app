@@ -43,7 +43,7 @@ class MovieController {
     loading.value = true;
 
     // await Future.delayed(const Duration(seconds: 2));
-    final data = await _moviesRepository.getMovies(page: _page);
+    final data = await _moviesRepository.getMovies();
 
     _cachedMovies?.listMovie!.addAll(data.listMovie!);
 

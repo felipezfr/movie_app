@@ -11,100 +11,106 @@ class CustomListCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () => {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(30.0),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
                 builder: (context) => DetailsPage(movie: movie),
-                fullscreenDialog: true),
-          )
-        },
-        child: GlassmorphismCardWidget(
-          blur: GLASSMORPHISM.blur,
-          opacity: GLASSMORPHISM.opacity,
-          radius: GLASSMORPHISM.radius,
-          child: Container(
-            height: 200,
-            padding: const EdgeInsets.all(5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 200,
-                  width: 134,
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Hero(
-                      tag: movie.id!,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10.0),
-                        ),
-                        child: Image.network(
-                          API.REQUEST_IMG(movie.posterPath!),
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            }
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
-                              ),
-                            );
-                          },
+                fullscreenDialog: true,
+              ),
+            )
+          },
+          child: GlassmorphismCardWidget(
+            blur: GLASSMORPHISM.blur,
+            opacity: GLASSMORPHISM.opacity,
+            radius: GLASSMORPHISM.radius,
+            child: Container(
+              height: 200,
+              padding: const EdgeInsets.all(5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 200,
+                    width: 134,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Hero(
+                        tag: movie.id!,
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
+                          child: Image.network(
+                            API.REQUEST_IMG(movie.posterPath!),
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          movie.title!,
-                          softWrap: true,
-                          overflow: TextOverflow.visible,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            movie.title!,
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          'Votos: ' + movie.voteCount.toString(),
-                          softWrap: true,
-                          overflow: TextOverflow.visible,
-                        ),
-                        Text(
-                          'Lançamento: ' + movie.releaseDate!,
-                          softWrap: true,
-                          overflow: TextOverflow.visible,
-                        ),
-                        Text(
-                          'Idioma: ' + movie.originalLanguage!,
-                          softWrap: true,
-                          overflow: TextOverflow.visible,
-                        ),
-                      ],
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          Text(
+                            'Votos: ' + movie.voteCount.toString(),
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
+                          ),
+                          Text(
+                            'Lançamento: ' + movie.releaseDate!,
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
+                          ),
+                          Text(
+                            'Idioma: ' + movie.originalLanguage!,
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -34,6 +34,7 @@ class DetailsPage extends StatelessWidget {
               children: [
                 const SizedBox(
                   height: 20,
+                  width: double.infinity,
                 ),
                 Hero(
                   tag: movie.id!,
