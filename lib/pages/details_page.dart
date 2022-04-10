@@ -3,6 +3,7 @@ import 'package:movie_app/models/movies_model.dart';
 import 'package:movie_app/utils/api_utils.dart';
 import 'package:movie_app/utils/glassmorphism_utils.dart';
 import 'package:movie_app/widgets/glassmorphism_card_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class DetailsPage extends StatelessWidget {
   final Movie movie;
@@ -40,19 +41,16 @@ class DetailsPage extends StatelessWidget {
                   tag: movie.id!,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      API.REQUEST_IMG(movie.posterPath!),
+                    child: CachedNetworkImage(
+                      imageUrl: API.REQUEST_IMG(movie.posterPath!),
                       height: 400,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
+                      progressIndicatorBuilder:
+                          (context, url, loadingProgress) {
                         return Center(
                           child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
+                            value: loadingProgress.progress != null
+                                ? loadingProgress.downloaded /
+                                    loadingProgress.totalSize!
                                 : null,
                           ),
                         );
