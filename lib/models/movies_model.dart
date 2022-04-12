@@ -27,12 +27,17 @@ class Movies {
     return _data;
   }
 
-  copyWith({List<Movie>? listMovie}) {
+  Movies copyWith({
+    int? page,
+    List<Movie>? listMovie,
+    int? totalPages,
+    int? totalResults,
+  }) {
     return Movies(
-      page: page,
+      page: page ?? this.page,
       listMovie: listMovie ?? this.listMovie,
-      totalPages: totalPages,
-      totalResults: totalResults,
+      totalPages: totalPages ?? this.totalPages,
+      totalResults: totalResults ?? this.totalResults,
     );
   }
 }

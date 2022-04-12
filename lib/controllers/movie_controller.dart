@@ -51,7 +51,7 @@ class MovieController {
         ? movies.value = data.copyWith(listMovie: _cachedMovies!.listMovie)
         : movies.value = data;
 
-    loading.value = false;
     _cachedMovies = movies.value;
+    loading.value = false;
   }
 }
