@@ -44,7 +44,7 @@ packages:
     source: hosted
     version: "2.1.0"
   cached_network_image:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: cached_network_image
       url: "https://pub.dartlang.org"
@@ -206,7 +206,7 @@ packages:
     source: hosted
     version: "2.0.2"
   google_fonts:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: google_fonts
       url: "https://pub.dartlang.org"
@@ -262,7 +262,7 @@ packages:
     source: hosted
     version: "1.0.2"
   lottie:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: lottie
       url: "https://pub.dartlang.org"
@@ -297,7 +297,7 @@ packages:
     source: hosted
     version: "1.0.1"
   mocktail:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: mocktail
       url: "https://pub.dartlang.org"
@@ -430,7 +430,7 @@ packages:
     source: hosted
     version: "0.27.3"
   shared_preferences:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
