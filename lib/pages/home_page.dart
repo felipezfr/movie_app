@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/controllers/movie_controller.dart';
-import 'package:movie_app/decorators/movies_cache_repository_decorator.dart';
 import 'package:movie_app/models/movies_model.dart';
-import 'package:movie_app/repositories/movies_repository_imp.dart';
-import 'package:movie_app/service/dio_service_imp.dart';
 import 'package:movie_app/utils/glassmorphism_utils.dart';
 import 'package:movie_app/widgets/custom_list_card_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/widgets/glassmorphism_card_widget.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,20 +16,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final MovieController _controller =
-      MovieController(MoviesCacheRepositoryDecorator(
-    MoviesRepositoryImp(
-      DioServiceImp(),
-    ),
-  ));
+  late final MovieController _controller;
+  // final MovieController _controller = MovieController(
+  //   MoviesCacheRepositoryDecorator(
+  //     MoviesRepositoryImp(
+  //       DioServiceImp(),
+  //     ),
+  //   ),
+  // );
 
   @override
   void initState() {
     super.initState();
-    _controller.scrollController = ScrollController();
-    _controller.scrollController.addListener(
-      _controller.infiniteScrolling,
-    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.scrollController = ScrollController();
+      _controller.scrollController.addListener(
+        _controller.infiniteScrolling,
+      );
+    });
   }
 
   @override
@@ -42,6 +45,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _controller = context.read<MovieController>();
+
     return Scaffold(
       body: Stack(children: [
         SizedBox(
@@ -56,7 +61,7 @@ class _HomePageState extends State<HomePage> {
           child: RefreshIndicator(
             onRefresh: () async => await _controller.onRefresh(),
             child: SingleChildScrollView(
-              controller: _controller.scrollController,
+              // controller: _controller.scrollController,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
