@@ -16,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final MovieController _controller;
   // final MovieController _controller = MovieController(
   //   MoviesCacheRepositoryDecorator(
   //     MoviesRepositoryImp(
@@ -25,16 +24,13 @@ class _HomePageState extends State<HomePage> {
   //   ),
   // );
 
+  late final MovieController _controller;
+
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _controller.scrollController = ScrollController();
-      _controller.scrollController.addListener(
-        _controller.infiniteScrolling,
-      );
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
 
   @override
@@ -46,6 +42,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final _controller = context.read<MovieController>();
+
+    _controller.scrollController.addListener(
+      _controller.infiniteScrolling,
+    );
 
     return Scaffold(
       body: Stack(children: [
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
           child: RefreshIndicator(
             onRefresh: () async => await _controller.onRefresh(),
             child: SingleChildScrollView(
-              // controller: _controller.scrollController,
+              controller: _controller.scrollController,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

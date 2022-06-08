@@ -12,7 +12,7 @@ class MovieController {
   Movies? _cachedMovies;
   ValueNotifier<bool> loading = ValueNotifier<bool>(false);
   ValueNotifier<Movies?> movies = ValueNotifier<Movies?>(null);
-  late final ScrollController scrollController;
+  ScrollController scrollController = ScrollController();
 
   infiniteScrolling() {
     if (scrollController.position.pixels + 350 >=
